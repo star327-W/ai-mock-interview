@@ -1,0 +1,49 @@
+# ===== 密钥与环境变量(必须忽略,泄露后果严重)=====
+backend/.env
+.env
+*.env.local
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+env/
+
+# ===== 数据库 =====
+*.db
+*.sqlite3
+
+# ===== 用户上传的文件 =====
+backend/uploads/
+
+# ===== 前端 =====
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# ===== 编辑器 / 系统 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===== 日志 =====
+*.log
+frontend-dev.log
+
+# ===== 编辑器/工具自动生成的目录(不属于项目)=====
+.trae/
+.workbuddy/
+
+# ===== 项目内不需要上传的本地备份/学校材料 =====
+_旧简历备份_*/
+文档/模拟面试AI助手-答辩PPT/
+文档/学校材料/
+文档/**/*.pptx
+文档/**/*.pptx.*
+
+# ===== 测试缓存 =====
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

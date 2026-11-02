@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《模拟面试AI助手》需求分析文档</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: linear-gradient(160deg, #f3f7fd 0%, #eef4fb 50%, #f7f4f0 100%);
+    color: #1a2230; line-height: 1.85; padding: 48px 24px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 32px; }
+  h1 { font-size: 30px; color: #0e3f8c; margin-bottom: 10px; }
+  .subtitle { color: #5a6a80; font-size: 14px; }
+  nav.toc {
+    background: #ffffff; border-radius: 12px; padding: 16px 22px; margin-bottom: 32px;
+    border: 1px solid #e2e8f2; box-shadow: 0 2px 10px rgba(30,79,168,.05);
+  }
+  nav.toc h2 { font-size: 15px; color: #1e4fa8; margin-bottom: 8px; padding: 0;
+    background: none; border: none; box-shadow: none; }
+  nav.toc ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  nav.toc a { color: #1e4fa8; text-decoration: none; font-size: 14px; border-bottom: 1px dashed #b9cbe8; }
+  nav.toc a:hover { border-bottom-style: solid; }
+  section { margin-bottom: 36px; }
+  h2 {
+    font-size: 21px; color: #0e3f8c; padding: 10px 16px; margin-bottom: 18px;
+    background: #ffffff; border-radius: 10px; border: 1px solid #e2e8f2;
+    box-shadow: 0 2px 8px rgba(30,79,168,.06);
+  }
+  h3 { font-size: 17px; color: #1e4fa8; margin: 22px 0 10px; }
+  h4 { font-size: 15px; color: #2c3a50; margin: 16px 0 8px; }
+  p { font-size: 14.5px; color: #2c3a50; margin-bottom: 10px; }
+  ul, ol { margin: 8px 0 12px 22px; font-size: 14.5px; color: #2c3a50; }
+  li { margin-bottom: 5px; }
+  .qa {
+    background: #ffffff; border-radius: 12px; padding: 18px 22px; margin-bottom: 14px;
+    border: 1px solid #e5eaf3; box-shadow: 0 2px 10px rgba(30,79,168,.05);
+  }
+  .q { font-size: 16px; font-weight: bold; color: #1e4fa8; margin-bottom: 8px; }
+  .a { font-size: 14.5px; color: #2c3a50; }
+  .a b, .a strong, p b, p strong, li b, li strong, td b, td strong { color: #0e3f8c; }
+  code {
+    background: #eef2f9; padding: 1px 6px; border-radius: 4px;
+    font-family: Consolas, monospace; font-size: 13px; color: #1e4fa8;
+  }
+  pre {
+    background: #f4f7fc; border: 1px solid #e2e8f2; border-radius: 10px;
+    padding: 14px 18px; margin: 12px 0; overflow-x: auto;
+    font-family: Consolas, monospace; font-size: 13px; line-height: 1.65; color: #2c3a50;
+  }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 18px; font-size: 14px; }
+  th, td { border: 1px solid #e2e8f2; padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { background: #e8eff8; color: #0e3f8c; font-weight: bold; }
+  tr:nth-child(even) td { background: #fafcff; }
+  hr { border: none; border-top: 1px dashed #cfd9e8; margin: 28px 0; }
+  blockquote {
+    background: #e8eff8; border-left: 4px solid #1e4fa8; border-radius: 8px;
+    padding: 12px 18px; margin: 12px 0; font-size: 14px; color: #1a2230;
+  }
+  blockquote p:last-child { margin-bottom: 0; }
+  footer { text-align: center; color: #8b97a8; font-size: 13px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>《模拟面试AI助手》需求分析文档</h1>
+    <div class="subtitle">需求梳理 + 实现情况对照</div>
+  </header>
+<nav class="toc"><h2>目录</h2><ul><li><a href="#sec-1">1. 项目概述</a></li><li><a href="#sec-2">2. 目标用户分析</a></li><li><a href="#sec-3">3. 核心业务流程</a></li><li><a href="#sec-4">4. 功能模块划分</a></li><li><a href="#sec-5">5. 非功能性需求</a></li><li><a href="#sec-6">6. 关键风险与结论</a></li><li><a href="#sec-7">7. 实际迭代节奏（与初稿计划的对比）</a></li></ul></nav>
+<blockquote><p>版本：V1.0（已按实际实现校正）</p><p>日期：2026-09-01（初稿）/ 后续随实现同步更新</p><p>状态：核心功能已实现并验证</p><p><b>阅读说明</b>：功能表里的「状态」列标注该功能<b>实际实现到什么程度</b>：</p><p>✅ 已实现并验证 / ⚠️ 部分实现或与初稿不同 / ⛔ 已放弃</p><p>初稿里有几处规划后来被推翻或替换，都在这份文档里如实标注，不做粉饰。</p></blockquote>
+<hr>
+<section id="sec-1"><h2>1. 项目概述</h2>
+<h3>1.1 项目背景</h3>
+<p>校招求职竞争激烈，应届生普遍缺乏真实面试经验：不知道面试会问什么、回答缺少结构、临场容易紧张，且真人模拟面试（如就业指导老师、学长学姐）资源稀缺、成本高、不可反复练习。</p>
+<p>大模型能力已能支撑高拟真度的模拟面试体验，本项目旨在通过 AI 面试官为校招应届生提供低成本、可反复、可量化反馈的模拟面试服务。</p>
+<h3>1.2 产品定位</h3>
+<p>面向<b>校招应届生</b>的 AI 模拟面试练习工具，以 <b>AI 实时生成题目 + 动态追问 + 多维度评估反馈</b>为核心能力，帮助用户在秋招/春招前高效备战。</p>
+<h3>1.3 产品形态</h3>
+<ul><li><b>载体</b>：Web 网站（PC 端浏览器访问，便于演示与分享传播，后续可扩展移动端适配）</li><li><b>商业模式</b>：免费 + 会员制（基础面试次数免费，完整次数与不限次会员付费解锁）</li></ul>
+<hr>
+<section id="sec-2"><h2>2. 目标用户分析</h2>
+<h3>2.1 用户画像</h3>
+<table><tr><th>维度</th><th>描述</th></tr><tr><td>核心用户</td><td>求职季的应届毕业生（大三大四、研二研三）</td></tr><tr><td>求职方向</td><td><b>不限技术岗</b>——覆盖 17 个方向，非技术岗占 9 个（产品、运营、行政、市场、人力、财务、客服、设计、教育）</td></tr><tr><td>核心痛点</td><td>无面试经验、缺练习对象、回答无反馈、不知道薄弱点在哪</td></tr><tr><td>使用场景</td><td>宿舍/自习室利用碎片或整块时间练习，面试前一晚冲刺</td></tr></table>
+<h3>2.2 用户核心诉求</h3>
+<ol><li>体验接近真实面试的问答过程（追问、压力感、真实面试官风格）</li><li>面试后被明确告知"答得怎么样、差在哪、怎么改"</li><li>看得见的进步（多次练习的能力成长曲线）</li></ol>
+<hr>
+<section id="sec-3"><h2>3. 核心业务流程</h2>
+<pre><code>手机号验证码登录 → 完善求职档案（简历 / 目标岗位 / 考察方向）
+        → 选择练习模式 + 面试官人设（+ 专项模式指定练哪一段）
+        → 开始面试：AI 出题 ↔ 用户作答（语音或打字），AI 动态追问
+        → 聊到建议时长 → 面试官自然收尾，问「还有没有想了解的」
+              ├─ 回「没有了」→ 直接结束，出报告
+              └─ 还有问题   → 面试官先回答，再接着聊
+        → 查看五维评估报告 + 逐题复盘（亮点/不足/改进建议/参考答案）
+        → 自动生成学习计划，历史数据沉淀，追踪成长</code></pre>
+<p><b>初稿流程里被删掉的两个环节</b>：</p>
+<ul><li>「分享报告」—— 没有实现，相关字段已从数据库删除（见 §4.5）</li><li>「制定学习计划」保留，但<b>打卡功能已移除</b>（见 §4.7）</li></ul>
+<hr>
+<section id="sec-4"><h2>4. 功能模块划分</h2>
+<h3>4.1 用户模块</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>手机号验证码登录</td><td>手机号 + 短信验证码注册/登录</td><td>P0</td><td>✅ 已实现。短信走阿里云<b>号码认证服务</b>（dypnsapi，个人可开通）；未配置密钥时回退调试模式，验证码打印到后端控制台</td></tr><tr><td>求职档案管理</td><td>简历上传、目标公司/岗位、考察方向的维护</td><td>P0</td><td>✅ 已实现</td></tr><tr><td>会员体系</td><td>免费/会员权益区分、续费、到期管理</td><td>P1</td><td>✅ 已实现（<b>支付为模拟</b>，见 §4.8）</td></tr></table>
+<p><b>初稿写的是"无需第三方对接"</b> —— 实际为了能真发短信，接了阿里云号码认证服务。这条与初稿不同，说明一下。</p>
+<h3>4.2 面试配置模块（面试前）</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>简历上传与解析</td><td>支持 PDF/Word/TXT，解析出项目经历、技术栈、教育背景，作为个性化出题依据</td><td>P0</td><td>✅ 已实现。PDF 用 <code>pypdf</code>，Word 自行解压 XML（<b>含文本框</b>），另用大模型转成结构化 JSON</td></tr><tr><td>目标岗位设置</td><td>填写目标公司 + 岗位（JD），AI 按岗位要求定制题目</td><td>P0</td><td>✅ 已实现。公司名还会用于匹配面试官的大厂风格库</td></tr><tr><td>考察方向选择</td><td>用户自选方向，实现按标签出题</td><td>P0</td><td>✅ 已实现。17 个方向，覆盖技术岗与非技术岗</td></tr><tr><td>面试官人设选择</td><td>温和鼓励型 / 压力追问型 / 按公司风格定制</td><td>P1</td><td>✅ 已实现。<b>按公司定制内置 6 家大厂真实风格库</b>：字节、腾讯、阿里、美团、华为、外企，按公司名自动匹配</td></tr><tr><td>练习模式选择</td><td>完整模拟面试 / 专项打磨训练 / 面试前冲刺模式</td><td>P0</td><td>✅ 已实现。<b>专项模式会让用户指定练简历里的哪一段</b>（见 §4.6）</td></tr><tr><td>难度选择</td><td>1–5 级难度</td><td>P1</td><td>✅ 已实现（滑杆选择）</td></tr></table>
+<h3>4.3 面试引擎（核心）</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>面试对话</td><td>AI 面试官提问，用户作答</td><td>P0</td><td>✅ 已实现</td></tr><tr><td>语音输入（ASR）</td><td>用户语音实时转文字</td><td>P0</td><td>✅ 已实现，用<b>浏览器原生 Web Speech API</b>（不是云端 ASR 服务），零成本、音频不出浏览器</td></tr><tr><td>语音播报（TTS）</td><td>面试官语音输出</td><td>P0</td><td>✅ 已实现，用浏览器 <code>speechSynthesis</code>；<b>⛔ 初稿写的"音色贴合人设"没有做</b>（用的是系统语音，人设库里的 <code>tts_voice</code> 字段一直是空的）</td></tr><tr><td>对话管理（多轮）</td><td>开场 → 自我介绍 → 追问/推进</td><td>P0</td><td>✅ 已实现。<b>开场白按人设分组随机挑选，并带上用户选的岗位和简历信息</b></td></tr><tr><td>动态追问</td><td>基于回答内容实时生成追问</td><td>P0</td><td>✅ 已实现。由大模型自主判断，规则只在降级时兜底</td></tr><tr><td>打断处理</td><td>用户可打断面试官</td><td>P1</td><td>⚠️ 技术上支持（新题推送时中断上一句播报），但没有做"面试官模拟真实打断"</td></tr><tr><td>面试过程控制</td><td>暂停、重问、跳过当前题、提前结束</td><td>P1</td><td>⚠️ <b>只做了"提前结束"</b>。"暂停/重问/跳过"没有实现</td></tr><tr><td>节奏控制</td><td>面试什么时候结束</td><td>—</td><td>✅ <b>初稿没写这一条，是后来新增的关键设计</b>：不设题数上限，按<b>建议时长</b>（完整 30 / 冲刺 20 / 专项 15 分钟）由面试官自己收尾</td></tr><tr><td>离开与恢复</td><td>中途离开怎么办</td><td>—</td><td>✅ <b>后来补的</b>：面试页每 60 秒心跳；误点导航会弹确认框；<b>离开超过 10 分钟自动结束</b>；回来能还原对话接着聊</td></tr></table>
+<h3>4.4 题目生成引擎</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>AI 实时出题</td><td>大模型基于简历 + 目标岗位 + 考察方向生成面试题</td><td>P0</td><td>✅ 已实现，带 10 轮对话记忆</td></tr><tr><td>题目质量控制</td><td>难度校准、去重、敏感内容过滤</td><td>P0</td><td>⚠️ 做了<b>难度控制、去重、岗位主线约束</b>；<b>没有做敏感内容过滤</b></td></tr><tr><td>追问链生成</td><td>根据回答质量决定是否深挖、追问到什么深度</td><td>P1</td><td>✅ 已实现（<code>parent_id</code> 自关联，多级追问）</td></tr><tr><td>出题策略配置</td><td>题量、时长、难度梯度可配置</td><td>P1</td><td>⚠️ <b>题量维度被推翻</b>：改成了"按建议时长 + 面试官自主收尾"，不再设题数上限。时长从字典表读，难度 1–5 可配</td></tr><tr><td>题库兜底</td><td>—</td><td>—</td><td>✅ <b>初稿说"不依赖预置题库"，实际做了反向决定</b>：加了 <code>question_bank</code> 表（88 道种子题），作为大模型不可用时的<b>第三级兜底</b>。原因见下</td></tr></table>
+<blockquote><p><b>关于题库的决策反转</b>：初稿写的是"纯 AI 实时生成，不依赖预置题库"，并留了一句"建议评审时确认是否需要少量预置锚点题用于质量兜底"。</p><p>实际实现时确认了<b>需要</b>——因为大模型接口不稳定（网络抖动、限流、偶发非法输出），必须有兜底才能保证"用户永远能走完一场完整面试"。</p><p>最终优先级是四级：<b>大模型 → 规则追问 → 题库一选题 → 模板生成</b>。</p></blockquote>
+<h3>4.5 评估反馈模块（面试后）</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>多维度评分报告</td><td>总分 + 分维度评分</td><td>P0</td><td>✅ 已实现，<b>五个维度</b>：技术深度 0.30 / 表达逻辑 0.20 / 岗位匹配 0.20 / 临场表现 0.15 / 沟通表达 0.15。第一个维度按岗位自适应（技术岗=技术深度，非技术岗=专业能力）</td></tr><tr><td>逐题点评复盘</td><td>每题展示问题、回答、参考答案、改进建议</td><td>P0</td><td>✅ 已实现，含亮点/不足/改进建议/参考答案</td></tr><tr><td>报告导出/分享</td><td>支持保存/分享（网页链接、海报图）</td><td>P1</td><td>⛔ <b>已放弃</b>。数据库里原本有 <code>report_url</code>、<code>share_code</code> 两个字段，但从未实现分享链路，<b>这两列已删除</b></td></tr><tr><td>历史成长追踪</td><td>能力雷达图与趋势曲线</td><td>P1</td><td>✅ 已实现，另有历史记录列表和学习计划</td></tr></table>
+<p><b>评分机制的关键设计（初稿没写，后来补的）</b>：大模型只负责在六个预设档位里选一个分数并输出结构化 JSON，代码要做<b>类型 + 范围校验</b>（0–100 的数字），不合格整条作废、改用本地规则引擎；本地规则引擎<b>零随机数</b>，同一段回答算一百次都是同一个分数。报告生成失败时退回规则聚合，并标记 <code>generated_by=RULE</code>，前端显示提示条告知用户。</p>
+<h3>4.6 练习模式</h3>
+<table><tr><th>模式</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>完整模拟面试</td><td>五阶段全流程</td><td>P0</td><td>✅ 已实现。<b>建议 30 分钟</b>（初稿写"20-40 分钟"，后定为固定 30）；阶段明确为：自我介绍 → 经历深挖 → 专业能力 → 行为素质 → 岗位认知与规划</td></tr><tr><td>专项打磨训练</td><td>针对单一材料反复训练</td><td>P1</td><td>✅ 已实现，<b>建议 15 分钟</b>。与初稿不同的关键点：<b>用户可以在配置页指定练哪一段</b>（选项从简历里真实拉出项目/实习），而不是由系统自己挑</td></tr><tr><td>面试前冲刺模式</td><td>面试前针对性速练</td><td>P1</td><td>✅ 已实现，<b>建议 20 分钟</b>。具体做法：只问高频必考题、一题一考点、不深挖、答得不行只点一句"这题要补"就往下走</td></tr></table>
+<h3>4.7 周边辅助功能</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>AI 简历优化建议</td><td>基于面试表现反向给出简历修改建议</td><td>P2</td><td>⛔ <b>已放弃</b>。<code>resume_optimization</code> 表从未写入过任何数据，整张表已删除</td></tr><tr><td>面经社区</td><td>用户分享面经、浏览检索</td><td>P2</td><td>✅ 已实现（<b>初稿预估是三期，实际提前做了</b>）：发帖、点赞、评论、按公司/关键词筛选</td></tr><tr><td>学习计划</td><td>根据薄弱项生成个性化备考计划</td><td>P2</td><td>✅ 已实现：面试结束出报告时自动生成学习任务，可逐项勾选完成</td></tr><tr><td>打卡</td><td>配合打卡提醒</td><td>P2</td><td>⛔ <b>已放弃</b>。初稿原计划做打卡日历，做完成长追踪后判断"打卡"和"任务勾选"重复且更重，<b>砍掉了打卡日历和 <code>check_in</code> 表</b></td></tr></table>
+<h3>4.8 商业化模块</h3>
+<table><tr><th>功能点</th><th>说明</th><th>优先级</th><th>状态</th></tr><tr><td>免费额度</td><td>基础面试次数免费</td><td>P0</td><td>✅ 已实现，新用户 3 次。<b>会员不扣次数</b>，只有非会员才扣</td></tr><tr><td>会员权益</td><td>完整次数/专项训练/成长追踪等付费解锁</td><td>P1</td><td>⚠️ 实际做法不同：<b>专项训练和成长追踪对所有用户开放，不做功能阉割</b>；付费只买"次数"和"不限次会员"</td></tr><tr><td>支付</td><td>在线支付（支付宝/微信支付 H5）</td><td>P1</td><td>⚠️ <b>支付是模拟的</b>：下单直接把订单标记为已支付，<code>transaction_id</code> 写成 <code>MOCK-xxxx</code>，前端按钮上明写"模拟支付"。<b>订单、套餐、权益发放、退款状态枚举这套是真的</b>；真接支付需要营业执照 + 异步回调验签，这是上线前置条件</td></tr></table>
+<hr>
+<section id="sec-5"><h2>5. 非功能性需求</h2>
+<table><tr><th>类别</th><th>要求</th><th>实际情况</th></tr><tr><td>性能</td><td>语音对话端到端延迟建议 &lt; 2s；报告生成 &lt; 1 分钟</td><td>✅ 语音不走后端（浏览器本地识别+合成），不存在端到端语音链路延迟；报告通常十几秒</td></tr><tr><td>出题体感</td><td>—</td><td>✅ <b>初稿没考虑，实际补的</b>：出题走 SSE 流式推送，题目文字逐块出现（打字机效果），首字延迟从几秒降到几百毫秒</td></tr><tr><td>可用性</td><td>面试中断（来电、切后台）后可恢复或明确提示重开</td><td>✅ 已实现：心跳 10 分钟自动结束 + 回来可续做 + 误点离开有确认框</td></tr><tr><td>内容安全</td><td>生成题目与点评需过滤敏感/歧视性内容；用户简历数据加密存储</td><td>⚠️ <b>没有做</b>：既没有敏感词过滤，简历也没有加密存储（只存服务器本地目录）。这是当前的缺口</td></tr><tr><td>合规</td><td>个人信息采集需明确授权；录音数据的留存策略需符合个保法</td><td>⚠️ <b>部分</b>：<b>本项目不存录音</b>（音频不出浏览器，只存转写文字），这一点天然合规；但简历数据没有字段级脱敏，也没有"导出我的数据/注销账号"入口</td></tr><tr><td>兼容</td><td>主流浏览器兼容，语音能力在不支持浏览器下要能降级</td><td>✅ 已实现降级：检测到不支持 Web Speech API 时提示换 Chrome/Edge，<b>始终保留纯文字输入</b>，功能不丢</td></tr></table>
+<hr>
+<section id="sec-6"><h2>6. 关键风险与结论</h2>
+<p>初稿列的 6 条风险，逐条给结论：</p>
+<ol><li><b>语音延迟体验</b> —— ✅ <b>风险解除</b>。因为最终没用"云端 ASR → LLM → 云端 TTS"这条链路，而是用浏览器原生 API，语音根本不经过网络，不存在端到端延迟问题。</li><li><b>浏览器语音能力兼容性</b> —— ⚠️ <b>存在</b>。目前 Chrome / Edge 支持好，Firefox / Safari 弱。缓解方式是检测能力并保留纯文字输入。</li><li><b>支付合规</b> —— ⚠️ <b>存在且未解决</b>。当前是模拟支付；真接入需要营业执照（个人开发者拿不到微信/支付宝的网站支付资质）+ 域名 ICP 备案。这是上线的前置条件，不是技术问题。</li><li><b>出题质量</b> —— ✅ <b>已缓解</b>。加了题库兜底（88 道种子题）+ 岗位主线约束 + 四级降级。</li><li><b>评估一致性</b> —— ✅ <b>已缓解但未验证</b>。低温度（0.2）+ 六个固定档位 + 完全确定性的本地规则引擎；但<b>没有做过"模型打分 vs 专家打分"的一致性校验</b>，这是下一步最该补的。</li><li><b>成本</b> —— ✅ <b>可控</b>。做了一处省钱设计：纯拒绝的回答（只说"不知道"且没补充）直接判 0 分，<b>不调用大模型</b>；另有四级降级减少无效调用。</li></ol>
+<hr>
+<section id="sec-7"><h2>7. 实际迭代节奏（与初稿计划的对比）</h2>
+<table><tr><th>期次</th><th>初稿计划</th><th>实际</th></tr><tr><td>一期</td><td>登录 + 求职档案 + 完整模拟面试 + 多维度评分报告 + 逐题复盘</td><td>✅ 全部完成</td></tr><tr><td>二期</td><td>专项打磨/冲刺模式 + 人设体系 + 成长追踪 + 会员付费</td><td>✅ 全部完成，且<b>人设体系超出计划</b>（多了 6 家大厂风格库）</td></tr><tr><td>三期</td><td>简历优化建议 + 面经社区 + 学习计划打卡</td><td>⚠️ <b>做了两个、砍了一个</b>：面经社区做了，学习计划做了（但去掉打卡），简历优化建议<b>砍掉</b></td></tr></table>
+<p><b>计划外额外做的</b>（初稿里没有）：</p>
+<ul><li>时长驱动的自然收尾（不设题数上限）</li><li>心跳 + 离开超时自动结束</li><li>误点导航拦截 + 面试可续做</li><li>简历解析支持 Word 文本框</li><li>SSE 流式出题</li><li>辩论级别的降级设计（出题四级 + 评分两级 + 报告标注来源）</li><li>评分六道校验关卡</li><li>站内会员中心完整链路（套餐/下单/订单/权益）</li></ul>
+<p><b>计划了但没做的</b>（如实列出）：</p>
+<ul><li>报告分享（字段已删）</li><li>简历优化建议（表已删）</li><li>打卡日历（表已删）</li><li>真实支付</li><li>敏感内容过滤</li><li>简历数据加密存储 / 账号注销</li><li>面试官音色贴合人设</li><li>暂停 / 重问 / 跳过当前题</li></ul></section></section></section></section></section></section></section>
+  <footer>本页由同目录下的 Markdown 文档自动生成 · 改内容请改 .md，再跑一次 生成文档HTML.py</footer>
+</div>
+</body>
+</html>

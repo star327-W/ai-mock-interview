@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模拟面试AI助手 · 快捷入口</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif; }
+  body {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #ffe9e2 0%, #e6f4f1 35%, #fdf3e7 65%, #f3ecfb 100%);
+    overflow: hidden; position: relative;
+  }
+  /* 背景光圈 */
+  .blob { position: fixed; border-radius: 50%; filter: blur(60px); opacity: .55; z-index: 0; }
+  .b1 { width: 420px; height: 420px; background: #ffb199; top: -120px; left: -100px; animation: float 14s ease-in-out infinite; }
+  .b2 { width: 380px; height: 380px; background: #9fe3d8; bottom: -120px; right: -80px; animation: float 18s ease-in-out infinite reverse; }
+  .b3 { width: 300px; height: 300px; background: #e9d5ff; top: 40%; right: 15%; animation: float 16s ease-in-out infinite; }
+  @keyframes float { 0%,100%{ transform: translate(0,0) } 50%{ transform: translate(30px,-30px) } }
+
+  .card {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 460px;
+    background: rgba(255,255,255,.72);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: 28px;
+    padding: 44px 36px 36px;
+    box-shadow: 0 20px 60px rgba(140,110,170,.18);
+    text-align: center;
+  }
+  .logo {
+    width: 76px; height: 76px; margin: 0 auto 18px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #ff8e7b, #b49ee8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 38px; box-shadow: 0 10px 26px rgba(255,142,123,.4);
+  }
+  h1 { font-size: 24px; color: #3d3848; margin-bottom: 6px; }
+  .sub { font-size: 14px; color: #82789a; margin-bottom: 28px; }
+
+  /* 状态灯 */
+  .status { display: flex; gap: 12px; justify-content: center; margin-bottom: 26px; flex-wrap: wrap; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 13px; color: #5c5570;
+    background: rgba(255,255,255,.7); border-radius: 999px;
+    padding: 7px 15px; border: 1px solid rgba(140,110,170,.12);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #c9c2d6; transition: .3s; }
+  .dot.on  { background: #34c77b; box-shadow: 0 0 0 4px rgba(52,199,123,.18); }
+  .dot.off { background: #ff5a5f; box-shadow: 0 0 0 4px rgba(255,90,95,.15); }
+  .dot.checking { background: #f5b942; animation: blink 1s infinite; }
+  .dot.idle { background: #c9c2d6; }
+  @keyframes blink { 50% { opacity: .3; } }
+
+  /* 主按钮 */
+  .btn-main {
+    display: block; width: 100%;
+    border: none; cursor: pointer; text-decoration: none;
+    font-size: 18px; font-weight: 700; color: #fff;
+    padding: 17px; border-radius: 16px;
+    background: linear-gradient(135deg, #ff8e7b, #ff6b6b);
+    box-shadow: 0 12px 28px rgba(255,110,100,.4);
+    transition: transform .15s, box-shadow .15s, opacity .2s;
+  }
+  .btn-main:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(255,110,100,.5); }
+  .btn-main:active { transform: translateY(0); }
+  .btn-main.disabled { background: #c9c2d6; box-shadow: none; cursor: not-allowed; opacity: .8; }
+
+  .tip {
+    margin-top: 16px; font-size: 13px; line-height: 1.7; color: #82789a;
+    background: rgba(255,255,255,.55); border-radius: 14px; padding: 14px 16px; text-align: left;
+  }
+  .tip b { color: #ff7a6b; }
+  .tip code {
+    background: rgba(140,110,170,.12); padding: 1px 7px; border-radius: 6px;
+    font-size: 12px; color: #6a5d8c; font-family: Consolas, monospace;
+  }
+  .links { margin-top: 18px; display: flex; gap: 18px; justify-content: center; font-size: 13px; }
+  .links a { color: #9a7fc4; text-decoration: none; }
+  .links a:hover { color: #ff7a6b; text-decoration: underline; }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+  <div class="card">
+    <div class="logo">🎙️</div>
+    <h1>模拟面试 AI 助手</h1>
+    <div class="sub">Mock Interview AI · 快捷入口</div>
+
+    <div class="status">
+      <span class="pill"><span class="dot checking" id="dot-fe"></span>前端 <span id="txt-fe">—</span></span>
+      <span class="pill"><span class="dot checking" id="dot-be"></span>后端 <span id="txt-be">—</span></span>
+    </div>
+
+    <a href="http://localhost:5173" class="btn-main" id="enterBtn">🚀 进入应用</a>
+
+    <div class="tip" id="tipBox">
+      点击上方按钮即可打开面试系统。<br>
+      若浏览器提示“无法访问此网站”，说明服务还没启动：<br>
+      请先<b>双击项目文件夹里的 <code>①一键启动模拟面试.bat</code></b>，约 10 秒后会自动打开。<br>
+      登录手机号：<code>13800138888</code>（验证码自动填入）。
+    </div>
+
+    <div class="links">
+      <a href="http://localhost:8000/docs" target="_blank">📘 后端接口文档</a>
+      <a href="http://localhost:5173" target="_blank">🔗 直接打开前端</a>
+    </div>
+  </div>
+
+<script>
+  var FE = 'http://localhost:5173';
+  var BE = 'http://localhost:8000/docs';
+
+  function check(url, timeout) {
+    return new Promise(function (resolve) {
+      var done = false;
+      var ctrl = ('AbortController' in window) ? new AbortController() : null;
+      var timer = setTimeout(function () {
+        done = true; if (ctrl) ctrl.abort(); resolve(false);
+      }, timeout || 3500);
+      fetch(url, { mode: 'no-cors', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+        .then(function () { if (!done) { done = true; clearTimeout(timer); resolve(true); } })
+        .catch(function () { if (!done) { done = true; clearTimeout(timer); resolve(false); } });
+    });
+  }
+
+  function setDot(id, txtId, online) {
+    var dot = document.getElementById(id);
+    var txt = document.getElementById(txtId);
+    if (online) {
+      dot.className = 'dot on';
+      txt.textContent = '在线';
+    } else {
+      // 探测失败不等于服务离线（可能是浏览器跨域限制），显示中性状态不误报
+      dot.className = 'dot idle';
+      txt.textContent = '—';
+    }
+  }
+
+  async function refresh() {
+    var fe = await check(FE);
+    var be = await check(BE);
+    setDot('dot-fe', 'txt-fe', fe);
+    setDot('dot-be', 'txt-be', be);
+    // 主按钮始终可点击：探测仅作“在线亮绿灯”的正向提示，不做禁用
+    var btn = document.getElementById('enterBtn');
+    btn.classList.remove('disabled');
+    btn.textContent = '🚀 进入应用';
+    btn.style.pointerEvents = 'auto';
+  }
+
+  refresh();
+  setInterval(refresh, 8000);
+</script>
+</body>
+</html>

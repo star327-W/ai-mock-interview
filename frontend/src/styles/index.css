@@ -1,0 +1,352 @@
+/* ============ 基础 Reset ============ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  color: #3d3848;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* ============ 流光凝彩 背景层 ============ */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none !important;
+  background: linear-gradient(135deg, #fffaf4 0%, #f0faf7 33%, #f4f1fc 66%, #fcf4f6 100%);
+  background-attachment: fixed;
+}
+.app-bg * {
+  pointer-events: none !important;
+}
+
+/* 五个大光圈 */
+.app-bg::before,
+.app-bg::after,
+.app-bg .orb-1,
+.app-bg .orb-2,
+.app-bg .orb-3,
+.app-bg .orb-4,
+.app-bg .orb-5 {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.9;
+}
+
+.app-bg .orb-1 {
+  top: -250px;
+  left: -250px;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(255, 142, 123, 0.4) 0%, rgba(255, 142, 123, 0) 70%);
+  animation: driftOrb1 14s ease-in-out infinite alternate;
+}
+.app-bg .orb-2 {
+  top: -200px;
+  right: -200px;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(60, 205, 182, 0.38) 0%, rgba(60, 205, 182, 0) 70%);
+  animation: driftOrb2 16s ease-in-out infinite alternate;
+}
+.app-bg .orb-3 {
+  bottom: -250px;
+  left: -250px;
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(180, 158, 232, 0.35) 0%, rgba(180, 158, 232, 0) 70%);
+  animation: driftOrb3 18s ease-in-out infinite alternate;
+}
+.app-bg .orb-4 {
+  bottom: -220px;
+  right: -220px;
+  width: 850px;
+  height: 850px;
+  background: radial-gradient(circle, rgba(245, 201, 80, 0.32) 0%, rgba(245, 201, 80, 0) 70%);
+  animation: driftOrb4 20s ease-in-out infinite alternate;
+}
+.app-bg .orb-5 {
+  top: 40%;
+  left: 40%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(242, 160, 182, 0.25) 0%, rgba(242, 160, 182, 0) 70%);
+  animation: driftOrb5 22s ease-in-out infinite alternate;
+}
+
+@keyframes driftOrb1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(60px, 40px) scale(1.08); }
+}
+@keyframes driftOrb2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-50px, 60px) scale(1.05); }
+}
+@keyframes driftOrb3 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(70px, -50px) scale(1.1); }
+}
+@keyframes driftOrb4 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-60px, -40px) scale(1.06); }
+}
+@keyframes driftOrb5 {
+  0% { transform: translate(0, 0) scale(0.95); }
+  100% { transform: translate(40px, 60px) scale(1.05); }
+}
+
+/* 流星 */
+.shooting-star {
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: 2px;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9));
+}
+.shooting-star::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.9);
+}
+
+.shooting-star.ss-1 { top: 8%; left: 85%; background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 180, 160, 0.8), rgba(255, 255, 255, 0)); animation: shoot 6s linear infinite; animation-delay: 0s; }
+.shooting-star.ss-2 { top: 20%; left: 70%; background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(125, 229, 210, 0.8), rgba(255, 255, 255, 0)); animation: shoot 7s linear infinite; animation-delay: 2s; }
+.shooting-star.ss-3 { top: 35%; left: 55%; background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(212, 200, 240, 0.8), rgba(255, 255, 255, 0)); animation: shoot 8s linear infinite; animation-delay: 4s; }
+.shooting-star.ss-4 { top: 50%; left: 90%; background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 214, 176, 0.8), rgba(255, 255, 255, 0)); animation: shoot 7.5s linear infinite; animation-delay: 1s; }
+.shooting-star.ss-5 { top: 65%; left: 60%; background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(125, 229, 210, 0.8), rgba(255, 255, 255, 0)); animation: shoot 6.5s linear infinite; animation-delay: 3s; }
+
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-30deg);
+  }
+  5% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-800px, 460px) rotate(-30deg);
+  }
+}
+
+/* 彩色星点 */
+.star-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px currentColor;
+  animation: twinkle 4s ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ============ 卡片通用风格 ============ */
+.glass-card {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(140, 110, 170, 0.06), 0 8px 32px rgba(140, 110, 170, 0.05);
+  border: 1px solid rgba(232, 227, 220, 0.6);
+}
+
+/* ============ 按钮渐变 ============ */
+.btn-coral {
+  background: linear-gradient(135deg, #ff8e7b 0%, #ffb4a0 50%, #f2a0b6 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 6px 18px rgba(255, 142, 123, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-coral:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(255, 142, 123, 0.45);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(232, 227, 220, 0.9) !important;
+  color: #3d3848 !important;
+  border-radius: 10px !important;
+}
+
+/* 渐变背景类 */
+.grad-coral { background: linear-gradient(135deg, #ff8e7b 0%, #ffb4a0 50%, #f2a0b6 100%); }
+.grad-turquoise { background: linear-gradient(135deg, #3ccdb6 0%, #7de5d2 50%, #5cd9a0 100%); }
+.grad-honey { background: linear-gradient(135deg, #f5a86a 0%, #ffd6b0 50%, #f5c950 100%); }
+.grad-purple { background: linear-gradient(135deg, #b49ee8 0%, #d4c8f0 50%, #6baeea 100%); }
+
+/* 通用布局容器 */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* 隐藏 AntD 某些默认圆角冲突 */
+.ant-card-head { border-bottom: 1px solid rgba(232, 227, 220, 0.5) !important; }
+
+/* 让 AntD Layout 透明，配合动态背景 */
+.ant-layout,
+.ant-layout-content,
+.ant-layout-header {
+  background: transparent !important;
+}
+.ant-layout-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   页面区块通用样式
+   说明：这些类原先在每个 .vue 的 <style scoped> 里各写一遍，
+        现提取到这里供「求职档案 / 面试配置」等页面共用。
+        scoped 样式带 [data-v-xxx] 属性选择器，特异性高于这里的
+        类选择器，所以此处新增不会影响其他页面已写的同名样式。
+   ============================================================ */
+
+/* 页面标题区 */
+.page-head { margin-bottom: 20px; }
+.page-head h2 { font-size: 22px; color: #3d3848; margin: 0; }
+.page-head .sub { color: #82789a; margin-top: 4px; font-size: 14px; }
+
+/* 区块卡片：scroll-margin-top 保证用锚点跳转时标题不被固定顶栏遮住
+   （顶栏 64px + 内容区顶部留白 72px，取 84px 留出呼吸空间） */
+.sec-card { padding: 24px; margin-bottom: 20px; scroll-margin-top: 84px; }
+
+/* 区块标题行 */
+.sec-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.sec-title { margin: 0; font-size: 16px; color: #3d3848; }
+.sec-desc { margin: 0 0 16px; font-size: 13px; color: #82789a; line-height: 1.6; }
+
+/* 必填 / 可选 角标 —— 中性色。
+   珊瑚色留给「进度」和「下一步」两处，角标再喊一次就等于都没喊。 */
+.sec-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  background: rgba(140, 110, 170, 0.12);
+  color: #6f6685;
+  white-space: nowrap;
+}
+.sec-badge.optional { background: transparent; color: #a79fbb; }
+
+/* 多选胶囊标签（统一原来 .tech-tag / .tech-chip 两套实现） */
+.tech-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.tech-chip {
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid #d4c8f0;
+  color: #3d3848;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.tech-chip:hover { border-color: #b49ee8; }
+.tech-chip.selected {
+  background: linear-gradient(135deg, #6baeea 0%, #b49ee8 100%);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* 必填星号、轻量提示、空状态 */
+.req { color: #ff8e7b; }
+.empty-tip { color: #82789a; font-size: 13px; }
+.empty-block {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #82789a;
+  text-align: center;
+  background: rgba(140, 110, 170, 0.05);
+}
+
+/* 底部操作栏。
+   悬浮时做成一张圆角卡片，而不是一条通栏色块：
+   通栏色块的直边和硬边框，在柔和的渐变背景上会显得很突兀，
+   也和页面其他玻璃拟态卡片不是同一套视觉语言。 */
+.foot-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.foot-actions .foot-tip {
+  margin-right: auto;
+  padding-left: 4px;
+  font-size: 13px;
+  color: #82789a;
+}
+.foot-actions.sticky {
+  position: sticky;
+  bottom: 16px;          /* 浮起来一点，不贴死底边 */
+  z-index: 10;
+  margin-top: 24px;
+  padding: 12px 20px;    /* 横向留白，文字不再顶着边缘 */
+  border-radius: 14px;
+  /* 一点点薄荷绿（项目里的青绿 #3CCDB6），和纯白卡片区分开 */
+  background: linear-gradient(
+    135deg,
+    rgba(246, 253, 251, 0.94) 0%,
+    rgba(232, 249, 244, 0.9) 100%
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(60, 205, 182, 0.24);
+  box-shadow: 0 8px 28px rgba(60, 205, 182, 0.15);
+}
+
+/* 文字用同色系的深色，在薄荷底上读得清、也比原来的灰紫更协调 */
+.foot-actions.sticky .foot-tip { color: #3d7f72; }
+.foot-actions.sticky .foot-tip strong {
+  font-weight: 700;
+  color: #28695c;
+}
+
+/* 从完成度清单跳转过来时，目标区块闪一下珊瑚光圈，告诉用户"就是这块" */
+@keyframes secFlash {
+  0% { box-shadow: 0 0 0 0 rgba(255, 142, 123, 0.55); }
+  100% { box-shadow: 0 0 0 14px rgba(255, 142, 123, 0); }
+}
+.flash-highlight { animation: secFlash 1.2s ease-out; }

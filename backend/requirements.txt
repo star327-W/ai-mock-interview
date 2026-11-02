@@ -1,0 +1,14 @@
+# 运行时依赖（已锁定版本，保证 clone 下来能复现）
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+sqlalchemy==2.0.52
+pymysql==1.2.0
+python-jose[cryptography]==3.5.0
+python-multipart==0.0.32
+pydantic-settings==2.15.0
+pydantic==2.13.5
+python-dotenv==1.2.3
+pypdf==6.17.0
+# 短信用的是「号码认证服务 - 短信认证」(dypnsapi)，不是传统短信服务(dysmsapi)。
+# 个人开发者走不通 dysmsapi（要企业资质 + 自申请签名模板），所以这里必须是 dypnsapi。
+alibabacloud_dypnsapi20170525==2.0.0
