@@ -310,7 +310,7 @@ mock-interview/
 │       ├── views/                     # 登录/首页/求职档案/面试配置/面试/报告/成长/社区/会员
 │       ├── components/                # 导航栏、气泡、清单、头像弹窗等
 │       └── api/                       # 接口封装（自动解包 {code,data,msg}）
-├── 文档/                              # 需求分析 / 数据字典 / 原型图 / 业务流程图
+├── 文档/                              # 需求分析 / 数据字典 / 业务流程图
 ├── docs/screenshots/                  # README 界面截图
 └── sql/mock_interview_schema.sql
 ```
