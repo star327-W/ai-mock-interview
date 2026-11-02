@@ -289,24 +289,28 @@ npm run dev
 ```
 mock-interview/
 ├── backend/
-│   └── app/
-│       ├── main.py                    # 入口：CORS + 全局异常 + 路由挂载
-│       ├── config.py                  # 配置（LLM Key / 数据库 / 短信 / JWT）
-│       ├── models/                    # 25 张表的 ORM（6 个文件按业务域拆分）
-│       ├── schemas/                   # Pydantic 请求模型
-│       ├── routers/                   # 9 个路由模块（含文件访问）
-│       └── services/
-│           ├── llm.py                 # ★ DeepSeek 客户端（标准库 + 超时/重试）
-│           ├── interview_service.py   # ★ 出题 / 评分 / 收尾 / 心跳
-│           ├── evaluation_service.py  # ★ 报告 / 学习计划
-│           ├── resume_parser.py       # ★ 简历解析（含 Word 文本框，自研解压解析）
-│           └── ai_mock.py             # 本地规则引擎（降级兜底，零随机数）
+│   ├── app/
+│   │   ├── main.py                    # 入口：CORS + 全局异常 + 路由挂载
+│   │   ├── config.py                  # 配置（LLM Key / 数据库 / 短信 / JWT）
+│   │   ├── models/                    # 25 张表的 ORM（6 个文件按业务域拆分）
+│   │   ├── schemas/                   # Pydantic 请求模型
+│   │   ├── routers/                   # 9 个路由模块（含文件访问）
+│   │   └── services/
+│   │       ├── llm.py                 # ★ DeepSeek 客户端（标准库 + 超时/重试）
+│   │       ├── interview_service.py   # ★ 出题 / 评分 / 收尾 / 心跳
+│   │       ├── evaluation_service.py  # ★ 报告 / 学习计划
+│   │       ├── resume_parser.py       # ★ 简历解析（含 Word 文本框，自研解压解析）
+│   │       ├── prompt_guard.py        # ★ 提示词注入防护
+│   │       ├── demo_service.py        # ★ 演示账号数据重置 + 示例简历
+│   │       └── ai_mock.py             # 本地规则引擎（降级兜底，零随机数）
+│   └── tests/                         # pytest（28 个用例）
 ├── frontend/                          # Vue3 + TS（9 个页面）
 │   └── src/
 │       ├── views/                     # 登录/首页/求职档案/面试配置/面试/报告/成长/社区/会员
 │       ├── components/                # 导航栏、气泡、清单、头像弹窗等
 │       └── api/                       # 接口封装（自动解包 {code,data,msg}）
-├── 文档/                              # 需求分析 / 数据字典 / 答辩 QA / 实习报告
+├── 文档/                              # 需求分析 / 数据字典 / 原型图 / 业务流程图
+├── docs/screenshots/                  # README 界面截图
 └── sql/mock_interview_schema.sql
 ```
 
